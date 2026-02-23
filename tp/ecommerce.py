@@ -1,32 +1,70 @@
-class Produit:
+class Article:
     def __init__(self, nom, prix):
         self.nom = nom
         self.prix = prix
 
+    def presenter(self):
+        raise NotImplementedError("Sous-classe doit implémenter cette méthode")
 
-class Commande:
+
+class Coque(Article):
+    def __init__(self, nom, prix, modele_telephonique):
+        super().__init__(nom, prix)
+        self.modele_telephonique = modele_telephonique
+
+    def presenter(self):
+        print(f"Ce produit est un {self.nom} du telephone {self.modele_telephonique}")
+
+
+class Accessoire(Article):
+    def __init__(self, nom, prix, categorie):
+        super().__init__(nom, prix)
+        self.categorie = categorie
+
+    def presenter(self):
+        print(f"Ce produit est un {self.nom} de categorie {self.categorie}")
+
+
+class Panier:
     def __init__(self):
-        self.article = []
+        self.articles = []
+        
+    def ajouter_article(self, article):
+        self.articles.append(article)
 
-    def add_product(self, produit):
-        self.article.append(produit)
-        print(f"Produits ajouté avec succéss")
+    # Dunder
+    def __add__(self, autre_panier):
+        nouveau_panier = Panier()
+        nouveau_panier.articles = self.articles + autre_panier.articles
+        return nouveau_panier
 
-    def calculate_total(self):
-        total = 0
-        for p in self.article:
-            total += p.prix
-        return total
+    def __len__(self):
+        return len(self.articles)
 
-    def paiement(self):
-        print(f"{client} votre commande est confirmer pour un total de: {self.calculate_total()}")
+    def display(self):
+        for article in self.articles:
+            article.presenter()
 
-client = "John"
+# Création des articles
+coque1 = Coque("Coque Transparente", 10, "iPhone 14")
+coque2 = Coque("Coque Silicone", 15, "Samsung S23")
 
-produit = Produit("Iphone 17", 550000)
-produit2 = Produit("Hp", 275000)
-commande = Commande()
-commande.add_product(produit)
-commande.add_product(produit2)
-commande.paiement()
+chargeur = Accessoire("Chargeur Rapide", 20, "Chargeur")
+ecouteur = Accessoire("AirPods", 50, "Audio")
 
+# Création des paniers
+panier1 = Panier()
+panier1.ajouter_article(coque1)
+panier1.ajouter_article(chargeur)
+
+panier2 = Panier()
+panier2.ajouter_article(coque2)
+panier2.ajouter_article(ecouteur)
+
+# Fusion avec +
+panier_final = panier1 + panier2
+
+print("Articles du panier final :")
+panier_final.display()
+
+print("\nNombre total d’articles :", len(panier_final))
