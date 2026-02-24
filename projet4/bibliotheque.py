@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from rich.console import Console
-from rich.panel import Panel
+
 
 #============================================
 # @Author Mouhamed Lo & Ndeye Fassa Samb
