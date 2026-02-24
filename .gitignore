@@ -3,3 +3,4 @@ datasCateg.json
 .venv
 .idea
 test.py
+__pycache__
