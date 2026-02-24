@@ -276,8 +276,8 @@ class Bibliothecaire:
 
     def afficher_document(self):
         """Affiche tous les documents enregistrés dans la bibliothèque."""
-        for livre in self.liste_document:
-            print(livre)  # Appelle __str__ de chaque document
+        for doc in self.liste_document:
+            print(doc)  # Appelle __str__ de chaque document
 
     def afficher_adherent(self):
         """Affiche tous les adhérents inscrits dans la bibliothèque."""
@@ -294,8 +294,6 @@ class Bibliothecaire:
         for adherant in self.liste_adherant:
             if adherant.nom == nom:
                 adherant.liste_emprunt()  # Délègue l'affichage à l'adhérent
-            else:
-                print("Aderant Introuvable")
 
     def inscrire_membre(self, nom):
         """
@@ -479,12 +477,7 @@ class Interface:
                         else:
                             print("Veuillez entrer un nom valide")
 
-                    while True:
-                        title = input("Veillez entrer votre title: ")
-                        if title.isalpha():
-                            break
-                        else:
-                            print("Veuillez entrer un title valide")
+                    titre = input("Veuillez saisir le titre du livre: ")
 
                     # Appel de la méthode de retour avec nom et titre saisis
                     self.bibliotheque.retour(titre, nom)
